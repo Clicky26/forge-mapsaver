@@ -1,0 +1,7 @@
+{
+  "compatibilityLevel": "JAVA_8",
+  "package": "me.clicky.mapsaver.mixin",
+  "mixins": ["MixinMapRender"],
+  "client": [],
+  "server": []
+}
