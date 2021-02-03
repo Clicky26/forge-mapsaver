@@ -8,6 +8,7 @@ import org.apache.commons.io.FileUtils;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import static me.clicky.mapsaver.function.ColourProfile.IdMap;
@@ -34,13 +35,15 @@ public class ExportMap {
         File target = new File(mapsaver.modFolder + "/maps/" + connection + "/" + MapName + ".png");
         if(!target.exists()) {
             BufferedImage image = new BufferedImage(MapSize, MapSize, BufferedImage.TYPE_INT_ARGB);
-
             for ( Integer x = 0; x < MapSize; x++ ) {
                 for ( Integer y = 0; y < MapSize; y++ ) {
                     Integer ColourID = (int) MapImage[ x + (y * MapSize)];
-                    image.setRGB(x, y, IdMap(ColourID));
+                    if (ColourID < 0)
+                        ColourID += 256;
+                    image.setRGB(x, y, IdMap(String.valueOf(ColourID)));
                 }
             }
+
 
             try {
                 ImageIO.write(image, "png", target);

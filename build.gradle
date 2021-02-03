@@ -61,7 +61,7 @@ jar {
     from(configurations.provided.collect {
         it.isDirectory() ? it : zipTree(it)
     }) {
-        exclude "LICENSE.txt", "META-INF/MANIFSET.MF", "META-INF/maven/**", "META-INF/*.RSA", "META-INF/*.SF"
+        exclude "META-INF/MANIFSET.MF", "META-INF/maven/**", "META-INF/*.RSA", "META-INF/*.SF"
     }
 
     manifest {
