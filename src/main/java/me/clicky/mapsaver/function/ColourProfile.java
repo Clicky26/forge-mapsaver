@@ -205,6 +205,14 @@ public class ColourProfile {
             case 197: return new Color(65,70,36).getRGB();
             case 198: return new Color(76,82,42).getRGB();
             case 199: return new Color(40,43,22).getRGB();
+            case 200: return new Color(100,42,32).getRGB();
+            case 201: return new Color(122,51,39).getRGB();
+            case 202: return new Color(142,60,46).getRGB();
+            case 203: return new Color(75,31,24).getRGB();
+            case 204: return new Color(26,15,11).getRGB();
+            case 205: return new Color(31,18,13).getRGB();
+            case 206: return new Color(37,22,16).getRGB();
+            case 207: return new Color(19,11,8).getRGB();
         }
         //Returns white if colour unknown
         return new Color(255,255,255).getRGB();
