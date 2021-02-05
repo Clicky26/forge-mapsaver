@@ -8,7 +8,6 @@ import org.apache.commons.io.FileUtils;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 
 import static me.clicky.mapsaver.function.ColourProfile.IdMap;
