@@ -11,6 +11,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.awt.*;
+import java.awt.datatransfer.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -20,7 +22,7 @@ import java.util.List;
 import static me.clicky.mapsaver.function.ColourProfile.IdMap;
 
 @Mixin(MapItemRenderer.class)
-public class MixinMapRender {
+public class MixinMapRender implements ClipboardOwner {
     @Inject(method = "renderMap", at = @At(value = "HEAD"), cancellable = true)
     public void renderMap(MapData mapData,boolean noOverlayRendering, CallbackInfo ci) {
         if (mapsaver.ExportAll) ExportMap.ExportPNG(mapData);
@@ -50,10 +52,55 @@ public class MixinMapRender {
                     EventHandler.g2d.dispose();
                     ImageIO.write(EventHandler.concatImage, "png", target);
                     ChatUtil.client_message_simple("Map exported to " + ChatUtil.b + EventHandler.name + ".png");
+
+                    Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    c.setContents(new TransferableImage(EventHandler.concatImage), this);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
+    }
+
+    public void lostOwnership( Clipboard clip, Transferable trans ) {
+        System.out.println( "Lost Clipboard Ownership" );
+    }
+
+
+    private class TransferableImage implements Transferable {
+        Image i;
+
+        public TransferableImage( Image i ) {
+            this.i = i;
+        }
+
+        public Object getTransferData( DataFlavor flavor )
+                throws UnsupportedFlavorException, IOException {
+            if ( flavor.equals( DataFlavor.imageFlavor ) && i != null ) {
+                return i;
+            }
+            else {
+                throw new UnsupportedFlavorException( flavor );
+            }
+        }
+
+        public DataFlavor[] getTransferDataFlavors() {
+            DataFlavor[] flavors = new DataFlavor[ 1 ];
+            flavors[ 0 ] = DataFlavor.imageFlavor;
+            return flavors;
+        }
+
+        public boolean isDataFlavorSupported( DataFlavor flavor ) {
+            DataFlavor[] flavors = getTransferDataFlavors();
+            for ( int i = 0; i < flavors.length; i++ ) {
+                if ( flavor.equals( flavors[ i ] ) ) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
     }
 }

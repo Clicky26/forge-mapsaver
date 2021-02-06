@@ -4,7 +4,6 @@ import java.awt.*;
 
 public class ColourProfile {
     public static int IdMap (String Id) {
-        Id = Id.replace("-", "");
         switch (Id) {
             case "0": return new Color(0,0,0).getRGB(); //unexplored so blank
             case "1": return new Color(0,0,0).getRGB(); //unexplored so blank

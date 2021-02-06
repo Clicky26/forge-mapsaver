@@ -49,8 +49,8 @@ public class EventHandler {
             //Get the thing I'm looking at
             final RayTraceResult result = Minecraft.getMinecraft().objectMouseOver;
 
-            //Is the thing an entity? We need an entity
-            if (result.entityHit == null) return;
+            //Is the thing an item frame? We need an item frame
+            if (!(result.entityHit instanceof EntityItemFrame)) return;
 
             //Does the entity have an item in it? If not then it's empty so won't contain a map
             if (result.entityHit.serializeNBT().hasKey("Item")) {
